@@ -63,7 +63,6 @@ class OneShareMaterial{
         //suplier add Material
         supplierPut = num;
         balance += num;
->>>>>>> 54a9275ad8d2647b2914153ed94886ac0c0b34d2
     }
     synchronized public int getMaterial(int num){
         //factory get Material

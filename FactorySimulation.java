@@ -16,6 +16,7 @@ class Factory extends Thread{
         super(p);
         ID = id;
         product = p;
+        lotSize = l;
         requriedMaterial = rMaterial; 
         countLots = 0;
     }

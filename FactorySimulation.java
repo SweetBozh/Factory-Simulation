@@ -20,7 +20,7 @@ class OneShareMaterial{
         //ask Balance Material
         return balance;
     }
-    public void putMaterial(int num){
+    synchronized public void putMaterial(int num){
         //suplier add Material
         balance = num;
     }

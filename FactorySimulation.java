@@ -49,3 +49,38 @@ class FactorySimulation {
         System.out.printf("Thread %5s", Thread.currentThread().getName());
     }
 }//end FactorySimulation
+
+class OneShareMaterial{
+    private String name;
+    private int balance;
+    public OneShareMaterial(){}
+    public OneShareMaterial(String n,int b){
+        name = n;
+        balance = b;
+    }
+    public String getNameMaterial(){
+        //ask Name Material
+        return name;
+    }
+    public int getBalance(){
+        //ask Balance Material
+        return balance;
+    }
+    public void putMaterial(int num){
+        balance = num;
+    }
+    synchronized public int getMaterial(int num){
+        //factory get material
+        int numGet;
+
+        if(balance - num >=0){
+            numGet = balance - num;
+        }
+        else numGet = 0;
+        return numGet;
+    }
+    public void printListMaterial(){
+        //check add Material
+        System.out.printf("Material : %s Balance : %4d\n",name,balance);
+    }
+}

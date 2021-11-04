@@ -5,6 +5,7 @@ import java.util.Scanner;
 /*Member 
 1. Warunyupa  Lerdsaeng        6313180
 2. Nalin      Suesangiamsakul  6313216*/
+
 class Factory extends Thread{
     private int ID,lotSize,countLots;
     private String product;
@@ -36,6 +37,7 @@ class Factory extends Thread{
             System.out.printf(" %3d %s,"requriedMaterial.get(i));
         }
         */
+        System.out.println("");
     }
 }//end Factory
 class OneShareMaterial{
@@ -46,7 +48,7 @@ class OneShareMaterial{
     public OneShareMaterial(){}
     public OneShareMaterial(String n,int b){
         name = n;
-        balance = b;
+        balance = b;  supplierPut = b;
     }
     public String getNameMaterial(){
         //ask Name Material
@@ -56,17 +58,17 @@ class OneShareMaterial{
         //ask Balance Material
         return balance;
     }
-    synchronized public void putMaterial(int num){
-        //suplier add Material
-        supplierPut = num;
-        balance += num;
+    public void putMaterial(){
+        //suplier add Material per day
+        balance += supplierPut;
     }
     synchronized public int getMaterial(int num){
         //factory get Material
-        int numGet;
+        int numGet; //numGet is factory can 
 
         if(balance - num >=0){
             numGet = balance - num;
+            balance = balance - num;
         }
         else numGet = 0;
         return numGet;

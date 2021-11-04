@@ -41,7 +41,7 @@ class FactorySimulation {
                         // *Constructor Add these data for material usage and print
                     }
                 }
-            } // end loop scanfile
+            }//end try
             catch (FileNotFoundException e) {
                 System.out.println("File missing");
                 System.err.println(e);
@@ -57,7 +57,7 @@ class FactorySimulation {
             } catch (RuntimeException e) {
                 System.err.println("Invalid input. \n" + e);
             }
-        }
+        }//end read material per day input
 
         while (days == 0) {
             try {
@@ -67,11 +67,16 @@ class FactorySimulation {
             } catch (RuntimeException e) {
                 System.err.println("Invalid input. \n" + e);
             }
-        }
-        scanInput.close();
-    }// end main
+        }//end read days input
 
-    
+        //*Wait for thread code
+        /*for(int i=0; i<days; i++){
+            program.printThreadName();
+            System.out.printf(" >> Day %d\n", i);
+
+        }*/
+        scanInput.close();
+    }// end main    
 }// end FactorySimulation
 
 class MyUtility{

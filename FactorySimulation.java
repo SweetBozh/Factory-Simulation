@@ -163,7 +163,6 @@ class FactorySimulation {
                 material.add(new OneShareMaterial(prodName.get(i), matAdd));
                 material.get(i).printListMaterial();
             }
-
             //*Wait for thread code
         }
         

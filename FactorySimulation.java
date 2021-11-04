@@ -10,6 +10,7 @@ class Factory extends Thread{
     private String product;
     private ArrayList<Integer> requriedMaterial;
     //private ArrayList<OneShareMaterial> OneShareArray;
+    MyUtility program = new MyUtility();
 
     public Factory(){}
     public Factory(int id,String p,int l,ArrayList<Integer> rMaterial){
@@ -21,13 +22,14 @@ class Factory extends Thread{
         countLots = 0;
     }
     public void run(){
-
+        //Not-complete
     }
 
     //Not-Complete 
     public void printFactory(){
         //Show detail Factory from read spec.txt 
-        System.out.printf("%-10s factory\t%4d units per lot materials per lot = ",product,lotSize);
+        program.printThreadName();
+        System.out.printf(" >> %-10s factory\t%4d units per lot materials per lot = ",product,lotSize);
         
         /* Show required Material 
         for(int i=0 ;i<requriedMaterial.size();i++){
@@ -35,10 +37,12 @@ class Factory extends Thread{
         }
         */
     }
-}
+}//end Factory
 class OneShareMaterial{
     private String name;
-    private int balance,putMaterial;
+    private int balance,supplierPut;
+    MyUtility program = new MyUtility();
+
     public OneShareMaterial(){}
     public OneShareMaterial(String n,int b){
         name = n;
@@ -54,7 +58,7 @@ class OneShareMaterial{
     }
     synchronized public void putMaterial(int num){
         //suplier add Material
-        putMaterial = num;
+        supplierPut = num;
         balance += num;
     }
     synchronized public int getMaterial(int num){
@@ -69,9 +73,10 @@ class OneShareMaterial{
     }
     public void printListMaterial(){
         //check all list Materials
-        System.out.printf("Put %4d %s \tBalance = %4d %s\n",putMaterial,name,balance,name);
+        program.printThreadName();
+        System.out.printf(" >> Put %4d %s \tBalance = %4d %s\n",supplierPut,name,balance,name);
     }
-}
+}//end OneShareMaterial
 
 class FactorySimulation {
     public static void main(String[] args) {

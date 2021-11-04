@@ -58,11 +58,7 @@ class OneShareMaterial{
         //ask Balance Material
         return balance;
     }
-<<<<<<< HEAD
-    public void putMaterial(){
-        //suplier add Material per day
-        balance += supplierPut;
-=======
+
     public void putMaterial(int num){
         //suplier add Material
         supplierPut = num;

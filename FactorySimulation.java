@@ -2,6 +2,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.lang.model.util.ElementScanner14;
+
 /*Member 
 1. Warunyupa  Lerdsaeng        6313180
 2. Nalin      Suesangiamsakul  6313216*/
@@ -58,26 +60,22 @@ class OneShareMaterial{
         //ask Balance Material
         return balance;
     }
-<<<<<<< HEAD
     public void putMaterial(){
         //suplier add Material per day
         balance += supplierPut;
-=======
-    public void putMaterial(int num){
-        //suplier add Material
-        supplierPut = num;
-        balance += num;
->>>>>>> 54a9275ad8d2647b2914153ed94886ac0c0b34d2
     }
     synchronized public int getMaterial(int num){
         //factory get Material
-        int numGet; //numGet is factory can 
+        int numGet=0; //numGet = factory can material
 
-        if(balance - num >=0){
-            numGet = balance - num;
-            balance = balance - num;
+        if(balance - num >0){
+            numGet = num;
+            balance-=num;
         }
-        else numGet = 0;
+        else if(balance-num <=0 ){
+            numGet = balance;
+            balance = 0;
+        }
         return numGet;
     }
 

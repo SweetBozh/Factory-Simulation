@@ -67,10 +67,11 @@ class OneShareMaterial{
         return balance;
     }
     public void putMaterial(int num){
+        //suplier add Material
         balance = num;
     }
     synchronized public int getMaterial(int num){
-        //factory get material
+        //factory get Material
         int numGet;
 
         if(balance - num >=0){
@@ -80,7 +81,7 @@ class OneShareMaterial{
         return numGet;
     }
     public void printListMaterial(){
-        //check add Material
+        //check all list Materials
         System.out.printf("Material : %s Balance : %4d\n",name,balance);
     }
 }

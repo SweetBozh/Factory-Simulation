@@ -4,6 +4,41 @@ import java.util.Scanner;
 /*Member 
 1. Warunyupa  Lerdsaeng        6313180
 2. Nalin      Suesangiamsakul  6313216*/
+class OneShareMaterial{
+    private String name;
+    private int balance;
+    public OneShareMaterial(){}
+    public OneShareMaterial(String n,int b){
+        name = n;
+        balance = b;
+    }
+    public String getNameMaterial(){
+        //ask Name Material
+        return name;
+    }
+    public int getBalance(){
+        //ask Balance Material
+        return balance;
+    }
+    public void putMaterial(int num){
+        //suplier add Material
+        balance = num;
+    }
+    synchronized public int getMaterial(int num){
+        //factory get Material
+        int numGet;
+
+        if(balance - num >=0){
+            numGet = balance - num;
+        }
+        else numGet = 0;
+        return numGet;
+    }
+    public void printListMaterial(){
+        //check all list Materials
+        System.out.printf("Material : %s Balance : %4d\n",name,balance);
+    }
+}
 
 class FactorySimulation {
     public static void main(String[] args) {
@@ -69,36 +104,10 @@ class FactorySimulation {
             }
         }//end read days input
 
-<<<<<<< HEAD
-class OneShareMaterial{
-    private String name;
-    private int balance;
-    public OneShareMaterial(){}
-    public OneShareMaterial(String n,int b){
-        name = n;
-        balance = b;
-    }
-    public String getNameMaterial(){
-        //ask Name Material
-        return name;
-    }
-    public int getBalance(){
-        //ask Balance Material
-        return balance;
-    }
-    public void putMaterial(int num){
-        //suplier add Material ยังไม่แน่ใจว่าต้อง synchronized อันนี้ด้วยไหม
-        balance = num;
-    }
-    synchronized public int getMaterial(int num){
-        //factory get Material
-        int numGet;
-=======
         //*Wait for thread code
         /*for(int i=0; i<days; i++){
             program.printThreadName();
             System.out.printf(" >> Day %d\n", i);
->>>>>>> 2ad3ed3b7dca0d38dc3e60ca53ea464dd5c3363d
 
         }*/
         scanInput.close();

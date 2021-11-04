@@ -71,7 +71,7 @@ class OneShareMaterial{
         else numGet = 0;
         return numGet;
     }
-    
+
     public void printListMaterial(){
         //check all list Materials
         program.printThreadName();
@@ -149,17 +149,17 @@ class FactorySimulation {
             }
         }//end read days input
 
-        for(int i=0; i < factID; i++){
+        for(int d=0; d<days; d++){
+            program.printThreadName();
+            System.out.printf(" >> Day %d\n", d);
+            for(int i=0; i < factID; i++){
                 material.add(new OneShareMaterial(prodName.get(i), matAdd));
                 material.get(i).printListMaterial();
             }
-        
-        //*Wait for thread code
-        /*for(int i=0; i<days; i++){
-            program.printThreadName();
-            System.out.printf(" >> Day %d\n", i);
 
-        }*/
+            //*Wait for thread code
+        }
+        
         scanInput.close();
     }// end main    
 }// end FactorySimulation

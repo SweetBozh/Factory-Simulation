@@ -67,7 +67,7 @@ class OneShareMaterial{
         return balance;
     }
     public void putMaterial(int num){
-        //suplier add Material
+        //suplier add Material ยังไม่แน่ใจว่าต้อง synchronized อันนี้ด้วยไหม
         balance = num;
     }
     synchronized public int getMaterial(int num){

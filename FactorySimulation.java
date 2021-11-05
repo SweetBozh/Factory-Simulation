@@ -30,6 +30,10 @@ class Factory extends Thread {
 
     public void run() {
         // Not-complete
+        for(int i =0; i<10; i++){
+            program.printThreadName();
+            System.out.printf("\n >> Test %d",i);
+        }
     }
 
     /*
@@ -113,7 +117,7 @@ class FactorySimulation {
         ArrayList<String> matName = new ArrayList<String>();
         ArrayList<String> prodName = new ArrayList<String>();
         ArrayList<Integer> upl = new ArrayList<Integer>();
-        // *ArrayList<Integer> numberOfLot = new ArrayList<Integer>();
+        ArrayList<Integer> numberOfLot = new ArrayList<Integer>();
         int matAdd = 0, days = 0;
 
         while (openSuccess == false) {
@@ -156,6 +160,10 @@ class FactorySimulation {
             }
         } // end loop openFile
 
+        for(int f=0; f <factID; f++){
+            numberOfLot.add(0);
+        }
+
         while (matAdd == 0) {
             try {
                 program.printThreadName();
@@ -191,7 +199,9 @@ class FactorySimulation {
                 }
             }
         }
-
+        //numberOfLot ArrayList keeps lot produced from each factories
+        //Which mean, size of numberOfLot = size of factories. 
+        //Also, numberOfLot of each fac will increase and change value, calculated in run
         for (int d = 0; d < days; d++) {
             ArrayList<Factory> factory = new ArrayList<Factory>();
             System.out.println();
@@ -202,14 +212,17 @@ class FactorySimulation {
                 material.get(i).printListMaterial();
             }
             for (int f = 0; f < factID; f++) {
-                factory.add(new Factory(f, prodName.get(f), upl.get(f), facRequired.get(f), material));
-                factory.get(f).start();
-
-                try {
-                    factory.get(f).join();
-                } catch (InterruptedException e) {
-                    System.out.println(e);
-                }
+                //*Edit Constructor (Add more parameter) before run next line
+                //*factory.add(new Factory(f, prodName.get(f), upl.get(f), facRequired.get(f), material), numberOfLot.get(f));
+                //factory.get(f).start();
+                //*Run Factory Thread, inside run(), update variable (++lot) int numberOfLot in thread
+                //try {
+                //    factory.get(f).join();
+                //} catch (InterruptedException e) {
+                //    System.out.println(e);
+                //}
+                //*numberOfLot.set(f, factory.get(f).getNumberOfLot()); 
+                //Keep variable Lot of each factory before thread die.
             }
         }
         scanInput.close();
@@ -218,8 +231,7 @@ class FactorySimulation {
         System.out.printf(" >> Summary ");
         program.printThreadName();
         for (int i = 0; i < factID; i++) {
-            // *System.out.printf(" Total %-8s Lots = %d", prodName.get(i),
-            // numberOfLot.get(i));
+            // *System.out.printf(" Total %-8s Lots = %d", prodName.get(i), numberOfLot.get(i));
         }
     }// end main
 }// end FactorySimulation

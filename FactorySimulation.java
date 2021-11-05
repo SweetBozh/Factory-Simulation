@@ -201,12 +201,12 @@ class FactorySimulation {
                 material.add(new OneShareMaterial(matName.get(i), matAdd));
                 material.get(i).printListMaterial();
             }
-            for (int i = 0; i < factID; i++) {
-                factory.add(new Factory(i, prodName.get(i), upl.get(i), facRequired.get(i), material));
-                factory.get(i).start();
+            for (int f = 0; f < factID; f++) {
+                factory.add(new Factory(f, prodName.get(f), upl.get(f), facRequired.get(f), material));
+                factory.get(f).start();
 
                 try {
-                    factory.get(i).join();
+                    factory.get(f).join();
                 } catch (InterruptedException e) {
                     System.out.println(e);
                 }

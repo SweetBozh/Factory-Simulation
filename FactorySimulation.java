@@ -27,7 +27,7 @@ class Factory extends Thread{
     }
     public void run(){
         //Not-complete
-        printFactory();
+        
     }
 
     //Not-Complete 

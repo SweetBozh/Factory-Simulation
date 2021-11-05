@@ -176,9 +176,7 @@ class FactorySimulation {
                     factory.get(i).join();
                 }
                 catch(InterruptedException e){System.out.println(e);}
-            }
-                
-                
+            } 
         }
         scanInput.close();
     }// end main    

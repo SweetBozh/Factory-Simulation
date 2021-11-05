@@ -39,68 +39,77 @@ class Factory extends Thread{
         //if(fail)
     }//end run
 }//end Factory
-class OneShareMaterial{
+class OneShareMaterial {
     private String name;
-    private int balance,supplierPut;
+    private int balance, supplierPut;
     MyUtility program = new MyUtility();
 
-    public OneShareMaterial(){}
-    public OneShareMaterial(String n,int b){
-        name = n;
-        balance = b;  supplierPut = b;
+    public OneShareMaterial() {
     }
-    public String getNameMaterial(){
-        //ask Name Material
+
+    public OneShareMaterial(String n, int b) {
+        name = n;
+        balance = b;
+        supplierPut = b;
+    }
+
+    public String getNameMaterial() {
+        // ask Name Material
         return name;
     }
-    public int getBalance(){
-        //ask Balance Material
+
+    public int getBalance() {
+        // ask Balance Material
         return balance;
     }
-    public void putMaterial(){
-        //suplier add Material per day
+
+    public void putMaterial() {
+        // suplier add Material per day
         balance += supplierPut;
     }
-    synchronized public int getMaterial(int num){
-        //factory get Material
-        int numGet=0; //numGet = factory can material
 
-        if(balance - num >0){
+    synchronized public int getMaterial(int num) {
+        // factory get Material
+        int numGet = 0; // numGet = factory can material
+
+        if (balance - num > 0) {
             numGet = num;
-            balance-=num;
-        }
-        else if(balance-num <=0 ){
+            balance -= num;
+        } else if (balance - num <= 0) {
             numGet = balance;
-            if(balance - num == 0)
+            if (balance - num == 0)
                 balance -= num;
-            else balance = 0;
+            else
+                balance = 0;
         }
         return numGet;
     }
 
-    public void printListMaterial(){
-        //check all list Materials
+    public void printListMaterial() {
+        // check all list Materials
         program.printThreadName();
-        System.out.printf(" >> Put %,5d %10s \tBalance = %,5d %10s\n",supplierPut,name,balance,name);
+        System.out.printf(" >> Put %,5d %10s \tBalance = %,5d %10s\n", supplierPut, name, balance, name);
     }
-}//end OneShareMaterial
+}// end OneShareMaterial
 
 class FactorySimulation {
     public static void main(String[] args) {
         MyUtility program = new MyUtility();
-        ArrayList<OneShareMaterial> material = new ArrayList<OneShareMaterial>(); //ArrayList is used when we don't know exact value
+        ArrayList<OneShareMaterial> material = new ArrayList<OneShareMaterial>(); // ArrayList is used when we don't
+                                                                                  // know exact value
         Boolean openSuccess = false, readLine1 = false;
         Scanner scanInput = new Scanner(System.in);
 
         String fileName;
-        int factID=0;
-        ArrayList<Integer> matRequired = new ArrayList<Integer>();
+        int factID = 0;
+        // 2D ArrayList facRequired keep ArrayList of each type of materials required
+        // amount;
+        ArrayList<ArrayList<Integer>> facRequired = new ArrayList<ArrayList<Integer>>();
         ArrayList<String> matName = new ArrayList<String>();
         ArrayList<String> prodName = new ArrayList<String>();
         ArrayList<Integer> upl = new ArrayList<Integer>();
         ArrayList<Integer> numberOfLot = new ArrayList<Integer>();
         int matAdd = 0, days = 0;
-
 
         while (openSuccess == false) {
             program.printThreadName();
@@ -111,23 +120,29 @@ class FactorySimulation {
                 openSuccess = true;
                 while (scanFile.hasNext()) { // Read 1 line per round
 
+                    ArrayList<Integer> matRequired = new ArrayList<Integer>();
+
                     String line = scanFile.nextLine();
                     String[] buf = line.split(",");
                     if (readLine1 == false) {
-                        for(int i=0; i< buf.length; i++){
+                        for (int i = 0; i < buf.length; i++) {
                             matName.add(buf[i].trim());
                         }
                         readLine1 = true;
                     } else {
                         factID = Integer.parseInt(buf[0].trim());
-                        prodName.add(buf[1]);
+                        prodName.add(buf[1].trim());
                         upl.add(Integer.parseInt(buf[2].trim()));
-                        for(int i= 3; i< matName.size() + 3; i++){
+                        for (int i = 3; i < matName.size() + 3; i++) {
+                            // Add Amount of each type of materials requirement and keep in Array
+                            // matRequired
                             matRequired.add(Integer.parseInt(buf[i].trim()));
                         }
+                        facRequired.add(matRequired); // Example - There are 3 factory; pants shirt jeans, but each
+                                                      // required 2 material; buttons, zippers
                     }
                 }
-            }//end try
+            } // end try
             catch (FileNotFoundException e) {
                 System.out.println("File missing");
                 System.err.println(e);
@@ -148,7 +163,7 @@ class FactorySimulation {
             } catch (RuntimeException e) {
                 System.err.println("Invalid input. \n" + e);
             }
-        }//end read material per day input
+        } // end read material per day input
 
         while (days == 0) {
             try {
@@ -180,9 +195,10 @@ class FactorySimulation {
         //Also, numberOfLot of each fac will increase and change value, calculated in run
         for (int d = 0; d < days; d++) {
             ArrayList<Factory> factory = new ArrayList<Factory>();
+            System.out.println();
             program.printThreadName();
-            System.out.printf(" >> Day %d\n", d+1);
-            for(int i=0; i < matName.size(); i++){
+            System.out.printf(" >> Day %d\n", d + 1);
+            for (int i = 0; i < matName.size(); i++) {
                 material.add(new OneShareMaterial(matName.get(i), matAdd));
                 material.get(i).printListMaterial();
             }
@@ -190,7 +206,7 @@ class FactorySimulation {
                 //*Edit Constructor (Add more parameter) before run next line
                 //*factory.add(new Factory(f, prodName.get(f), upl.get(f), facRequired.get(f), material), numberOfLot.get(f));
                 //factory.get(f).start();
-                //*Run Factory Thread, inside run(), update variable (++lot) int numberOfLot in thread
+                //*Run Factory Thread, inside run(), update variable int numberOfLot in thread
                 //try {
                 //    factory.get(f).join();
                 //} catch (InterruptedException e) {
@@ -211,7 +227,7 @@ class FactorySimulation {
     }// end main
 }// end FactorySimulation
 
-class MyUtility{
+class MyUtility {
     public void printThreadName() {
         System.out.printf("Thread %-5s", Thread.currentThread().getName());
     }

@@ -102,6 +102,7 @@ class FactorySimulation {
         ArrayList<String> matName = new ArrayList<String>();
         ArrayList<String> prodName = new ArrayList<String>();
         ArrayList<Integer> upl = new ArrayList<Integer>();
+        //*ArrayList<Integer> numberOfLot = new ArrayList<Integer>();
         int matAdd = 0, days = 0;
 
 
@@ -178,6 +179,13 @@ class FactorySimulation {
             } 
         }
         scanInput.close();
+
+        program.printThreadName();
+        System.out.printf(" >> Summary ");
+        program.printThreadName();
+        for(int i=0; i< factID; i++){
+            //*System.out.printf(" Total %-8s Lots = %d", prodName.get(i), numberOfLot.get(i));
+        }
     }// end main    
 }// end FactorySimulation
 

@@ -11,7 +11,7 @@ import javax.lang.model.util.ElementScanner14;
 class Factory extends Thread{
     private int ID,lotSize,countLots;
     private String product;
-    private ArrayList<Integer> requriedMaterial;
+    private ArrayList<Integer> requiredMaterial;
     //private ArrayList<OneShareMaterial> OneShareArray;
     MyUtility program = new MyUtility();
 
@@ -21,7 +21,7 @@ class Factory extends Thread{
         ID = id;
         product = p;
         lotSize = l;
-        requriedMaterial = rMaterial; 
+        requiredMaterial = rMaterial; 
         countLots = 0;
     }
     public void run(){
@@ -35,8 +35,8 @@ class Factory extends Thread{
         System.out.printf(" >> %-10s factory\t%4d units per lot materials per lot = ",product,lotSize);
         
         /* Show required Material 
-        for(int i=0 ;i<requriedMaterial.size();i++){
-            System.out.printf(" %3d %s,"requriedMaterial.get(i));
+        for(int i=0 ;i<requiredMaterial.size();i++){
+            System.out.printf(" %3d %s,"requiredMaterial.get(i));
         }
         */
         System.out.println("");

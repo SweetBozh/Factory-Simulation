@@ -1,13 +1,10 @@
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Scanner;
-
-import javax.lang.model.util.ElementScanner14;
-
 /*Member 
 1. Warunyupa  Lerdsaeng        6313180
 2. Nalin      Suesangiamsakul  6313216*/
 
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 class Factory extends Thread{
     private int ID,lotSize,countLots;
     private String product;

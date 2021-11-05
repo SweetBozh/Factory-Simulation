@@ -11,7 +11,7 @@ import javax.lang.model.util.ElementScanner14;
 class Factory extends Thread{
     private int ID,lotSize,countLots;
     private String product;
-    private ArrayList<Integer> requriedMaterial;
+    private ArrayList<Integer> requiredMaterial;
     //private ArrayList<OneShareMaterial> OneShareArray;
     MyUtility program = new MyUtility();
 
@@ -21,22 +21,23 @@ class Factory extends Thread{
         ID = id;
         product = p;
         lotSize = l;
-        requriedMaterial = rMaterial; 
+        requiredMaterial = rMaterial; 
         countLots = 0;
     }
     public void run(){
         //Not-complete
+        printFactory();
     }
 
     //Not-Complete 
     public void printFactory(){
         //Show detail Factory from read spec.txt 
         program.printThreadName();
-        System.out.printf(" >> %-10s factory\t%4d units per lot materials per lot = ",product,lotSize);
+        System.out.printf(" >> %-8s factory\t%4d units per lot materials per lot = \n",product,lotSize);
         
         /* Show required Material 
-        for(int i=0 ;i<requriedMaterial.size();i++){
-            System.out.printf(" %3d %s,"requriedMaterial.get(i));
+        for(int i=0 ;i<requiredMaterial.size();i++){
+            System.out.printf(" %3d %s,"requiredMaterial.get(i));
         }
         */
         System.out.println("");
@@ -92,15 +93,15 @@ class FactorySimulation {
     public static void main(String[] args) {
         MyUtility program = new MyUtility();
         ArrayList<OneShareMaterial> material = new ArrayList<OneShareMaterial>(); //ArrayList is used when we don't know exact value
-        //*ArrayList<Factory> factory = new ArrayList<Factory>;
         Boolean openSuccess = false, readLine1 = false;
         Scanner scanInput = new Scanner(System.in);
 
         String fileName;
-        int factID=0, upl;
+        int factID=0;
         ArrayList<Integer> matRequired = new ArrayList<Integer>();
         ArrayList<String> matName = new ArrayList<String>();
         ArrayList<String> prodName = new ArrayList<String>();
+        ArrayList<Integer> upl = new ArrayList<Integer>();
         int matAdd = 0, days = 0;
 
 
@@ -117,13 +118,13 @@ class FactorySimulation {
                     String[] buf = line.split(",");
                     if (readLine1 == false) {
                         for(int i=0; i< buf.length; i++){
-                            matName.add(buf[i]);
+                            matName.add(buf[i].trim());
                         }
                         readLine1 = true;
                     } else {
                         factID = Integer.parseInt(buf[0].trim());
                         prodName.add(buf[1]);
-                        upl = Integer.parseInt(buf[2].trim());
+                        upl.add(Integer.parseInt(buf[2].trim()));
                         for(int i= 3; i< matName.size() + 3; i++){
                             matRequired.add(Integer.parseInt(buf[i].trim()));
                         }
@@ -159,15 +160,25 @@ class FactorySimulation {
         }//end read days input
 
         for(int d=0; d<days; d++){
+            ArrayList<Factory> factory = new ArrayList<Factory>();
             program.printThreadName();
-            System.out.printf(" >> Day %d\n", d);
-            for(int i=0; i < factID; i++){
-                material.add(new OneShareMaterial(prodName.get(i), matAdd));
+            System.out.printf(" >> Day %d\n", d+1);
+            for(int i=0; i < matName.size(); i++){
+                material.add(new OneShareMaterial(matName.get(i), matAdd));
                 material.get(i).printListMaterial();
             }
-            //*Wait for thread code
+            for(int i=0; i < factID; i++){
+                factory.add(new Factory(i, prodName.get(i), upl.get(i), matRequired));
+                factory.get(i).start();
+                
+                try{
+                    factory.get(i).join();
+                }
+                catch(InterruptedException e){System.out.println(e);}
+            }
+                
+                
         }
-        
         scanInput.close();
     }// end main    
 }// end FactorySimulation

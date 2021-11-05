@@ -119,6 +119,7 @@ class FactorySimulation {
                 while (scanFile.hasNext()) { // Read 1 line per round
 
                     ArrayList<Integer> matRequired = new ArrayList<Integer>();
+                    ArrayList<Integer> matLeft= new ArrayList<Integer>();
 
                     String line = scanFile.nextLine();
                     String[] buf = line.split(",");

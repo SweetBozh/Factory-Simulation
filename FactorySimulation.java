@@ -12,16 +12,17 @@ class Factory extends Thread{
     private int ID,lotSize,countLots;
     private String product;
     private ArrayList<Integer> requiredMaterial;
-    //private ArrayList<OneShareMaterial> OneShareArray;
+    private ArrayList<OneShareMaterial> OneShareArray;
     MyUtility program = new MyUtility();
 
     public Factory(){}
-    public Factory(int id,String p,int l,ArrayList<Integer> rMaterial){
+    public Factory(int id,String p,int l,ArrayList<Integer> rMaterial,ArrayList<OneShareMaterial> OneShare){
         super(p);
         ID = id;
         product = p;
         lotSize = l;
         requiredMaterial = rMaterial; 
+        OneShareArray = OneShare; 
         countLots = 0;
     }
     public void run(){
@@ -168,7 +169,7 @@ class FactorySimulation {
                 material.get(i).printListMaterial();
             }
             for(int i=0; i < factID; i++){
-                factory.add(new Factory(i, prodName.get(i), upl.get(i), matRequired));
+                factory.add(new Factory(i, prodName.get(i), upl.get(i), matRequired,material));
                 factory.get(i).start();
                 
                 try{

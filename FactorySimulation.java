@@ -85,7 +85,7 @@ class OneShareMaterial{
     public void printListMaterial(){
         //check all list Materials
         program.printThreadName();
-        System.out.printf(" >> Put %4d %s \tBalance = %4d %s\n",supplierPut,name,balance,name);
+        System.out.printf(" >> Put %,5d %10s \tBalance = %,5d %10s\n",supplierPut,name,balance,name);
     }
 }//end OneShareMaterial
 

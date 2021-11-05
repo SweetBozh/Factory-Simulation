@@ -1,9 +1,3 @@
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Scanner;
-
-import javax.lang.model.util.ElementScanner14;
-
 /*Member 
 1. Warunyupa  Lerdsaeng        6313180
 2. Nalin      Suesangiamsakul  6313216*/
@@ -27,6 +21,7 @@ class Factory extends Thread {
         OneShareArray = OneShare;
         countLots = 0;
     }
+<<<<<<< HEAD
 
     public void run() {
         int tempGet;
@@ -40,6 +35,22 @@ class Factory extends Thread {
 
 }// end Factory
 
+=======
+    public void run(){
+       int tempGet;
+       int  fail=0;
+       for(int i=0; i <requiredMaterial.size();i++){
+        tempGet = OneShareArray.get(i).getMaterial(requiredMaterial.get(i));
+        System.out.printf(" >> Get %,5d %10s",tempGet,OneShareArray.get(i).getNameMaterial());
+        System.out.printf(" balance = %,5d %10s\n",OneShareArray.get(i).getBalance(),OneShareArray.get(i).getNameMaterial());
+            //if(tempGet!=requiredMaterial.get(i)){
+                fail++;
+            //}
+        }
+        //if(fail)
+    }//end run
+}//end Factory
+>>>>>>> 24e721b5b42ac98c2af50525c5a6367588981e3f
 class OneShareMaterial {
     private String name;
     private int balance, supplierPut;
@@ -109,7 +120,11 @@ class FactorySimulation {
         ArrayList<String> matName = new ArrayList<String>();
         ArrayList<String> prodName = new ArrayList<String>();
         ArrayList<Integer> upl = new ArrayList<Integer>();
+<<<<<<< HEAD
         // *ArrayList<Integer> numberOfLot = new ArrayList<Integer>();
+=======
+        ArrayList<Integer> numberOfLot = new ArrayList<Integer>();
+>>>>>>> 24e721b5b42ac98c2af50525c5a6367588981e3f
         int matAdd = 0, days = 0;
 
         while (openSuccess == false) {
@@ -152,6 +167,13 @@ class FactorySimulation {
             }
         } // end loop openFile
 
+<<<<<<< HEAD
+=======
+        for(int f=0; f <factID; f++){
+            numberOfLot.add(0);
+        }
+
+>>>>>>> 24e721b5b42ac98c2af50525c5a6367588981e3f
         while (matAdd == 0) {
             try {
                 program.printThreadName();
@@ -187,7 +209,13 @@ class FactorySimulation {
                 }
             }
         }
+<<<<<<< HEAD
 
+=======
+        //numberOfLot ArrayList keeps lot produced from each factories
+        //Which mean, size of numberOfLot = size of factories. 
+        //Also, numberOfLot of each fac will increase and change value, calculated in run
+>>>>>>> 24e721b5b42ac98c2af50525c5a6367588981e3f
         for (int d = 0; d < days; d++) {
             ArrayList<Factory> factory = new ArrayList<Factory>();
             System.out.println();
@@ -198,6 +226,7 @@ class FactorySimulation {
                 material.get(i).printListMaterial();
             }
             for (int f = 0; f < factID; f++) {
+<<<<<<< HEAD
                 factory.add(new Factory(f, prodName.get(f), upl.get(f), facRequired.get(f), material));
                 factory.get(f).start();
 
@@ -206,6 +235,19 @@ class FactorySimulation {
                 } catch (InterruptedException e) {
                     System.out.println(e);
                 }
+=======
+                //*Edit Constructor (Add more parameter) before run next line
+                //*factory.add(new Factory(f, prodName.get(f), upl.get(f), facRequired.get(f), material), numberOfLot.get(f));
+                //factory.get(f).start();
+                //*Run Factory Thread, inside run(), update variable int numberOfLot in thread
+                //try {
+                //    factory.get(f).join();
+                //} catch (InterruptedException e) {
+                //    System.out.println(e);
+                //}
+                //*numberOfLot.set(f, factory.get(f).getNumberOfLot()); 
+                //Keep variable Lot of each factory before thread die.
+>>>>>>> 24e721b5b42ac98c2af50525c5a6367588981e3f
             }
         }
         scanInput.close();
@@ -214,8 +256,12 @@ class FactorySimulation {
         System.out.printf(" >> Summary ");
         program.printThreadName();
         for (int i = 0; i < factID; i++) {
+<<<<<<< HEAD
             // *System.out.printf(" Total %-8s Lots = %d", prodName.get(i),
             // numberOfLot.get(i));
+=======
+            // *System.out.printf(" Total %-8s Lots = %d", prodName.get(i), numberOfLot.get(i));
+>>>>>>> 24e721b5b42ac98c2af50525c5a6367588981e3f
         }
     }// end main
 }// end FactorySimulation

@@ -216,7 +216,7 @@ class FactorySimulation {
                 //} catch (InterruptedException e) {
                 //    System.out.println(e);
                 //}
-                //*facMatLeft.set(f, factory.get(f).getNumberOfLot()); 
+                //*facMatLeft.set(f, factory.get(f).getMaterialLeft()); //Create method in Factory 
                 //*numberOfLot.set(f, factory.get(f).getNumberOfLot()); 
                 //Keep variab
             }

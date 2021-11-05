@@ -26,13 +26,14 @@ class Factory extends Thread{
     }
     public void run(){
         //Not-complete
+        printFactory();
     }
 
     //Not-Complete 
     public void printFactory(){
         //Show detail Factory from read spec.txt 
         program.printThreadName();
-        System.out.printf(" >> %-10s factory\t%4d units per lot materials per lot = ",product,lotSize);
+        System.out.printf(" >> %-8s factory\t%4d units per lot materials per lot = \n",product,lotSize);
         
         /* Show required Material 
         for(int i=0 ;i<requiredMaterial.size();i++){
@@ -92,7 +93,6 @@ class FactorySimulation {
     public static void main(String[] args) {
         MyUtility program = new MyUtility();
         ArrayList<OneShareMaterial> material = new ArrayList<OneShareMaterial>(); //ArrayList is used when we don't know exact value
-        ArrayList<Factory> factory = new ArrayList<Factory>();
         Boolean openSuccess = false, readLine1 = false;
         Scanner scanInput = new Scanner(System.in);
 
@@ -160,6 +160,7 @@ class FactorySimulation {
         }//end read days input
 
         for(int d=0; d<days; d++){
+            ArrayList<Factory> factory = new ArrayList<Factory>();
             program.printThreadName();
             System.out.printf(" >> Day %d\n", d+1);
             for(int i=0; i < matName.size(); i++){
@@ -168,14 +169,15 @@ class FactorySimulation {
             }
             for(int i=0; i < factID; i++){
                 factory.add(new Factory(i, prodName.get(i), upl.get(i), matRequired));
-                //factory.get(i).start();
-            }
-                /*
+                factory.get(i).start();
+                
                 try{
                     factory.get(i).join();
                 }
                 catch(InterruptedException e){System.out.println(e);}
-                */
+            }
+                
+                
         }
         scanInput.close();
     }// end main    

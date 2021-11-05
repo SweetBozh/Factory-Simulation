@@ -74,7 +74,9 @@ class OneShareMaterial{
         }
         else if(balance-num <=0 ){
             numGet = balance;
-            balance = 0;
+            if(balance - num == 0)
+                balance -= num;
+            else balance = 0;
         }
         return numGet;
     }

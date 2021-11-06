@@ -63,6 +63,41 @@ class Factory implements Runnable {
 
 }// end Factory
 
+/*
+System.out.printf(" >> -------- Complete Lot %d \n",countLots);
+}
+else System.out.printf(" >> -------- Fail \n");
+
+int temp1,temp2,temp3,facGet; 
+//temp1 keep lotSize*required Material;
+//temp2 keep add Material to cMaterial when lots fail then collect material;
+//temp3 keep new required Material 
+
+for(int i=0; i<rMaterial.size();i++){ 
+    temp1 = lotSize*rMaterial.get(i);
+    facGet = oneArray.get(i).getMaterial(temp1);
+    if(cMaterial.size()<=rMaterial.size()){
+        cMartial.add(facGet);
+    }
+    else{
+        temp2 = cMaterial.get(i);
+        temp2 = temp2+facGet;
+        cMarterial.set(i,temp2);
+    }//end-if
+
+    if(temp1==cMaterial.get(i)){
+        countLots++;
+        cMaterial.set(i,0);
+    }
+    else{
+        fail++;
+        temp3 = rMaterial.get(i) - cMaterial.get(i);
+        rMaterial.set(i,temp3);
+    }//end-if
+    //print complete or fail;
+}//end-for loop
+}//end-run*/
+
 class OneShareMaterial {
     private String name;
     private int balance, supplierPut;
@@ -275,7 +310,7 @@ class FactorySimulation {
         scanInput.close();
 
         program.printThreadName();
-        System.out.printf(" >> Summary ");
+        System.out.printf(" >> Summary \n");
         program.printThreadName();
         for (int i = 0; i < factID; i++) {
             System.out.printf(" Total %-8s Lots = %d\n", prodName.get(i), numberOfLot.get(i));

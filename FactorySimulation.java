@@ -8,7 +8,7 @@ import java.util.Scanner;
 class Factory implements Runnable{
     private int ID,lotSize,countLots,fail=0; 
     //private String product;
-    private ArrayList<Integer> rMaterial,cMaterial = new ArrayList<Integer>();
+    private ArrayList<Integer> requiredMat,inStockMat = new ArrayList<Integer>();
     private ArrayList<OneShareMaterial> osList;
     MyUtility program = new MyUtility();
 
@@ -16,24 +16,24 @@ class Factory implements Runnable{
     public Factory(int id,int l,ArrayList<Integer> rMat,ArrayList<OneShareMaterial> onl){
         ID = id; //product = p;
         lotSize = l;
-        rMaterial = rMat; 
+        requiredMat = rMat; 
         osList = onl; 
         countLots = 0;
     }
     public void run(){
         int facGet,temp1;
-        for(int i=0 ;i<rMaterial.size();i++){
-            temp1 = lotSize*rMaterial.get(i);
+        for(int i=0 ;i<requiredMat.size();i++){
+            temp1 = lotSize*requiredMat.get(i);
             facGet = osList.get(i).getMaterial(temp1);
-            cMaterial.add(0);
-            if(cMaterial.get(i)+facGet<temp1){
+            inStockMat.add(0);
+            if(inStockMat.get(i)+facGet<temp1){
                 fail++;
-                cMaterial.set(i,+facGet);
+                inStockMat.set(i,+facGet);
             }
             else{
-                cMaterial.set(i,0);
+                inStockMat.set(i,0);
             }
-            //program.printThreadName(); System.out.printf(" >> cMaterial [%d] = %d\n",i,cMaterial.get(i));
+            //program.printThreadName(); System.out.printf(" >> inStockMat [%d] = %d\n",i,inStockMat.get(i));
             program.printThreadName();
             System.out.printf(" >> Get %,5d %10s",facGet,osList.get(i).getNameMaterial());
             System.out.printf("  Balance = %,5d %10s\n",osList.get(i).getBalance(),osList.get(i).getNameMaterial());
@@ -47,29 +47,29 @@ class Factory implements Runnable{
         /*
         int temp1,temp2,temp3,facGet; 
         //temp1 keep lotSize*required Material;
-        //temp2 keep add Material to cMaterial when lots fail then collect material;
+        //temp2 keep add Material to inStockMat when lots fail then collect material;
         //temp3 keep new required Material 
 
-        for(int i=0; i<rMaterial.size();i++){ 
-            temp1 = lotSize*rMaterial.get(i);
-            facGet = oneArray.get(i).getMaterial(temp1);
-            if(cMaterial.size()<=rMaterial.size()){
-                cMartial.add(facGet);
+        for(int i=0; i<requiredMat.size();i++){ 
+            temp1 = lotSize*requiredMat.get(i);
+            facGet = osList.get(i).getMaterial(temp1);
+            if(inStockMat.size()<=requiredMat.size()){
+                inStockMat.add(facGet);
             }
             else{
-                temp2 = cMaterial.get(i);
+                temp2 = inStockMat.get(i);
                 temp2 = temp2+facGet;
-                cMarterial.set(i,temp2);
+                inStockMat.set(i,temp2);
             }//end-if
 
-            if(temp1==cMaterial.get(i)){
+            if(temp1==inStockMat.get(i)){
                 countLots++;
-                cMaterial.set(i,0);
+                inStockMat.set(i,0);
             }
             else{
                 fail++;
-                temp3 = rMaterial.get(i) - cMaterial.get(i);
-                rMaterial.set(i,temp3);
+                temp3 = requiredMat.get(i) - inStockMat.get(i);
+                requiredMat.set(i,temp3);
             }//end-if
             //print complete or fail;
         }//end-for loop
@@ -221,7 +221,7 @@ class FactorySimulation {
                     upl.get(f));
             for (int m = 0; m < facRequired.get(f).size(); m++) { // Each material Required; facRequired.get(i).size() =
                                                                   // number of materials type
-                System.out.printf("%3d %s", getfacRequired.get(f).get(m), matName.get(m)); // facRequired.get(i).get(m) =
+                System.out.printf("%3d %s", facRequired.get(f).get(m), matName.get(m)); // facRequired.get(i).get(m) =
                                                                                         // amount of required materials
                 if (m == facRequired.get(f).size() - 1) {
                     System.out.printf("\n");

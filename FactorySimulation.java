@@ -5,6 +5,21 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+<<<<<<< HEAD
+class Factory implements Runnable{
+    private int ID,lotSize,countLots,fail=0; 
+    //private String product;
+    private ArrayList<Integer> rMaterial,cMaterial = new ArrayList<Integer>();
+    private ArrayList<OneShareMaterial> osList;
+    MyUtility program = new MyUtility();
+
+    public Factory(){}
+    public Factory(int id,int l,ArrayList<Integer> rMat,ArrayList<OneShareMaterial> onl){
+        ID = id; //product = p;
+        lotSize = l;
+        rMaterial = rMat; 
+        osList = onl; 
+=======
 class Factory extends Thread{
     private int ID,lotSize,countLots;
     private String product;
@@ -20,21 +35,35 @@ class Factory extends Thread{
         lotSize = l;
         requiredMaterial = rMaterial; 
         OneShareArray = OneShare; 
+>>>>>>> 4abdaba0a135cf48110cef8b4596fd84e40610f1
         countLots = 0;
     }
     public void run(){
-       int tempGet;
-       int  fail=0;
-       for(int i=0; i <requiredMaterial.size();i++){
-        tempGet = OneShareArray.get(i).getMaterial(requiredMaterial.get(i));
-        System.out.printf(" >> Get %,5d %10s",tempGet,OneShareArray.get(i).getNameMaterial());
-        System.out.printf(" balance = %,5d %10s\n",OneShareArray.get(i).getBalance(),OneShareArray.get(i).getNameMaterial());
-            //if(tempGet!=requiredMaterial.get(i)){
+        int facGet,temp1;
+        for(int i=0 ;i<rMaterial.size();i++){
+            temp1 = lotSize*rMaterial.get(i);
+            facGet = osList.get(i).getMaterial(temp1);
+            cMaterial.add(0);
+            if(cMaterial.get(i)+facGet<temp1){
                 fail++;
-            //}
+                cMaterial.set(i,+facGet);
+            }
+            else{
+                cMaterial.set(i,0);
+            }
+            //program.printThreadName(); System.out.printf(" >> cMaterial [%d] = %d\n",i,cMaterial.get(i));
+            program.printThreadName();
+            System.out.printf(" >> Get %,5d %10s",facGet,osList.get(i).getNameMaterial());
+            System.out.printf("  Balance = %,5d %10s\n",osList.get(i).getBalance(),osList.get(i).getNameMaterial());
         }
-        //if(fail)
-    }//end run
+        program.printThreadName();
+        if(fail==0) { 
+            ++countLots;
+            System.out.printf(" >> -------- Complete Lot %d \n",countLots);
+        }
+        else System.out.printf(" >> -------- Fail \n");
+     }//end-run
+
 }//end Factory
 class OneShareMaterial {
     private String name;

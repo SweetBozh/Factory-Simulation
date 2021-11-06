@@ -218,7 +218,6 @@ class FactorySimulation {
                 //}
                 //*facMatLeft.set(f, factory.get(f).getMaterialLeft()); //Create method in Factory 
                 //*numberOfLot.set(f, factory.get(f).getNumberOfLot()); 
-                //Keep variab
             }
             
             //Old code    

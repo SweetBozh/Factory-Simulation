@@ -1,0 +1,2 @@
+
+                threadToday.add(facThread);

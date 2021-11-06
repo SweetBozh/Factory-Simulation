@@ -5,48 +5,64 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
-class Factory implements Runnable{
-    private int ID,lotSize,countLots,fail=0; 
-    //private String product;
-    private ArrayList<Integer> rMaterial,cMaterial = new ArrayList<Integer>();
-    private ArrayList<OneShareMaterial> osList;
+
+class Factory implements Runnable {
+    private int ID, lotSize, countLots, fail = 0;
+    // private String product;
+    private ArrayList<Integer> requireMat, inStockMat = new ArrayList<Integer>();
+    private ArrayList<OneShareMaterial> sharedMaterial;
     MyUtility program = new MyUtility();
 
-    public Factory(){}
-    public Factory(int id,int l,ArrayList<Integer> rMat,ArrayList<OneShareMaterial> onl){
-        ID = id; //product = p;
-        lotSize = l;
-        rMaterial = rMat; 
-        osList = onl; 
-        countLots = 0;
+    public Factory() {
     }
-    public void run(){
-        int facGet,temp1;
-        for(int i=0 ;i<rMaterial.size();i++){
-            temp1 = lotSize*rMaterial.get(i);
-            facGet = osList.get(i).getMaterial(temp1);
-            cMaterial.add(0);
-            if(cMaterial.get(i)+facGet<temp1){
+
+    public Factory(int id, int ls, ArrayList<Integer> rMat, ArrayList<OneShareMaterial> onl, int nl,
+            ArrayList<Integer> sMat) {
+        ID = id; // product = p;
+        lotSize = ls;
+        requireMat = rMat;
+        sharedMaterial = onl;
+        countLots = nl;
+        inStockMat = sMat;
+    }
+
+    public void run() {
+        int facGet, temp;
+        //Thread of one Factory
+        for (int m = 0; m < requireMat.size(); m++) {
+            temp = lotSize * requireMat.get(m);
+            facGet = sharedMaterial.get(m).getMaterial(temp);
+            //inStockMat.add(0);
+            if (inStockMat.get(m) + facGet < temp) {
                 fail++;
-                cMaterial.set(i,+facGet);
+                inStockMat.set(m, facGet);
+            } else {
+                inStockMat.set(m, 0);
             }
-            else{
-                cMaterial.set(i,0);
-            }
-            //program.printThreadName(); System.out.printf(" >> cMaterial [%d] = %d\n",i,cMaterial.get(i));
+            // program.printThreadName(); System.out.printf(" >> inStockMat [%d] =
+            // %d\n",i,inStockMat.get(i));
             program.printThreadName();
-            System.out.printf(" >> Get %,5d %10s",facGet,osList.get(i).getNameMaterial());
-            System.out.printf("  Balance = %,5d %10s\n",osList.get(i).getBalance(),osList.get(i).getNameMaterial());
+            System.out.printf(" >> Get %,5d %10s", facGet, sharedMaterial.get(m).getNameMaterial());
+            System.out.printf("  Balance = %,5d %10s\n", sharedMaterial.get(m).getBalance(), sharedMaterial.get(m).getNameMaterial());
         }
         program.printThreadName();
-        if(fail==0) { 
+        if (fail == 0) {
             ++countLots;
-            System.out.printf(" >> -------- Complete Lot %d \n",countLots);
-        }
-        else System.out.printf(" >> -------- Fail \n");
-     }//end-run
+            System.out.printf(" >> -------- Complete Lot %d \n", countLots);
+        } else
+            System.out.printf(" >> -------- Fail \n");
+    }// end-run
 
-}//end Factory
+    public int getNumberOfLot() {
+        return countLots;
+    }
+
+    public ArrayList<Integer> getMaterialLeft() {
+        return inStockMat;
+    }
+
+}// end Factory
+
 class OneShareMaterial {
     private String name;
     private int balance, supplierPut;
@@ -57,8 +73,8 @@ class OneShareMaterial {
 
     public OneShareMaterial(String n, int b) {
         name = n;
-        balance = b;
         supplierPut = b;
+        balance = 0;
     }
 
     public String getNameMaterial() {
@@ -110,7 +126,8 @@ class FactorySimulation {
 
         String fileName;
         int factID = 0;
-        // 2D ArrayList facRequired keep ArrayList of each type of materials required amount;
+        // 2D ArrayList facRequired keep ArrayList of each type of materials required
+        // amount;
         // 2D ArrayList facMatLeft keep material left of each factory before thread die.
         ArrayList<ArrayList<Integer>> facRequired = new ArrayList<ArrayList<Integer>>();
         ArrayList<ArrayList<Integer>> facMatLeft = new ArrayList<ArrayList<Integer>>();
@@ -130,7 +147,7 @@ class FactorySimulation {
                 while (scanFile.hasNext()) { // Read 1 line per round
 
                     ArrayList<Integer> matRequired = new ArrayList<Integer>();
-                    ArrayList<Integer> matLeft= new ArrayList<Integer>();
+                    ArrayList<Integer> matLeft = new ArrayList<Integer>();
 
                     String line = scanFile.nextLine();
                     String[] buf = line.split(",");
@@ -147,10 +164,11 @@ class FactorySimulation {
                             // Add Amount of each type of materials requirement and keep in Array
                             // matRequired
                             matRequired.add(Integer.parseInt(buf[i].trim()));
-                            matLeft.add(0); //Set initial value;
+                            matLeft.add(0); // Set initial value;
                         }
                         facRequired.add(matRequired); // Example - There are 3 factory; pants shirt jeans, but each
                                                       // required 2 material; buttons, zippers
+                        facMatLeft.add(matLeft);
                     }
                 }
             } // end try
@@ -162,7 +180,7 @@ class FactorySimulation {
             }
         } // end loop openFile
 
-        for(int f=0; f <factID; f++){
+        for (int f = 0; f < factID; f++) {
             numberOfLot.add(0);
         }
 
@@ -201,52 +219,58 @@ class FactorySimulation {
                 }
             }
         }
-        //numberOfLot ArrayList keeps lot produced from each factories
-        //Which mean, size of numberOfLot = size of factories. 
-        //Also, numberOfLot of each fac will increase and change value, calculated in run
+        // numberOfLot ArrayList keeps lot produced from each factories
+        // Which mean, size of numberOfLot = size of factories.
+        // Also, numberOfLot of each fac will increase and change value, calculated in
+        // run
         for (int d = 0; d < days; d++) {
             ArrayList<Factory> factory = new ArrayList<Factory>();
             System.out.println();
             program.printThreadName();
             System.out.printf(" >> Day %d\n", d + 1);
+
+            // Put Material
             for (int i = 0; i < matName.size(); i++) {
                 material.add(new OneShareMaterial(matName.get(i), matAdd));
+                material.get(i).putMaterial();
                 material.get(i).printListMaterial();
             }
-            
-            //New code
+            System.out.println();
+
+            // Get Material (Thread work)
             for (int f = 0; f < factID; f++) {
-                //*Edit Constructor (Add more parameter) before run next line
-                //*factory.add(new Factory(f, prodName.get(f), upl.get(f), facRequired.get(f), material), numberOfLot.get(f));
-                //Thread thread = new Thread(factory.get(f));
-                //thread.start();
+                // *Edit Constructor (Add more parameter) before run next line
+                factory.add(new Factory(f, upl.get(f), facRequired.get(f), material, numberOfLot.get(f), facMatLeft.get(f)));
+                Thread thread = new Thread(factory.get(f), prodName.get(f));
+                thread.start();
 
-                //*Run Factory Thread, inside run(), update variable int numberOfLot in thread
-                //try {
-                //    thread.join();
-                //} catch (InterruptedException e) {
-                //    System.out.println(e);
-                //}
-                //*facMatLeft.set(f, factory.get(f).getMaterialLeft()); //Create method in Factory 
-                //*numberOfLot.set(f, factory.get(f).getNumberOfLot()); 
+                // *Run Factory Thread, inside run(), update variable int numberOfLot in thread
+                try {
+                    thread.join();
+                } catch (InterruptedException e) {
+                    System.out.println(e);
+                }
+                facMatLeft.set(f, factory.get(f).getMaterialLeft()); // Create method in Factory
+                numberOfLot.set(f, factory.get(f).getNumberOfLot());
             }
-            
-            //Old code    
-            //for (int f = 0; f < factID; f++) {
-                //*Edit Constructor (Add more parameter) before run next line
-                //*factory.add(new Factory(f, prodName.get(f), upl.get(f), facRequired.get(f), material), numberOfLot.get(f));
-                //factory.get(f).start();
-                //*Run Factory Thread, inside run(), update variable int numberOfLot in thread
-                //try {
-                //    factory.get(f).join();
-                //} catch (InterruptedException e) {
-                //    System.out.println(e);
-                //}
 
-                //*facMatLeft.set(f, factory.get(f).getNumberOfLot()); 
-                //*numberOfLot.set(f, factory.get(f).getNumberOfLot()); 
-                //Keep variable Lot of each factory before thread die.
-            //}
+            // Old code
+            // for (int f = 0; f < factID; f++) {
+            // *Edit Constructor (Add more parameter) before run next line
+            // *factory.add(new Factory(f, prodName.get(f), upl.get(f), facRequired.get(f),
+            // material), numberOfLot.get(f));
+            // factory.get(f).start();
+            // *Run Factory Thread, inside run(), update variable int numberOfLot in thread
+            // try {
+            // factory.get(f).join();
+            // } catch (InterruptedException e) {
+            // System.out.println(e);
+            // }
+
+            // *facMatLeft.set(f, factory.get(f).getMaterialLeft());
+            // *numberOfLot.set(f, factory.get(f).getNumberOfLot());
+            // Keep variable Lot of each factory before thread die.
+            // }
         }
         scanInput.close();
 
@@ -254,13 +278,13 @@ class FactorySimulation {
         System.out.printf(" >> Summary ");
         program.printThreadName();
         for (int i = 0; i < factID; i++) {
-            // *System.out.printf(" Total %-8s Lots = %d", prodName.get(i), numberOfLot.get(i));
+            System.out.printf(" Total %-8s Lots = %d\n", prodName.get(i), numberOfLot.get(i));
         }
     }// end main
 }// end FactorySimulation
 
 class MyUtility {
     public void printThreadName() {
-        System.out.printf("Thread %-5s", Thread.currentThread().getName());
+        System.out.printf("Thread %-10s", Thread.currentThread().getName());
     }
 }

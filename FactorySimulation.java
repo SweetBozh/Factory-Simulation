@@ -5,7 +5,6 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
-<<<<<<< HEAD
 class Factory implements Runnable{
     private int ID,lotSize,countLots,fail=0; 
     //private String product;
@@ -19,23 +18,6 @@ class Factory implements Runnable{
         lotSize = l;
         rMaterial = rMat; 
         osList = onl; 
-=======
-class Factory extends Thread{
-    private int ID,lotSize,countLots;
-    private String product;
-    private ArrayList<Integer> requiredMaterial;
-    private ArrayList<OneShareMaterial> OneShareArray;
-    MyUtility program = new MyUtility();
-
-    public Factory(){}
-    public Factory(int id,String p,int l,ArrayList<Integer> rMaterial,ArrayList<OneShareMaterial> OneShare){
-        super(p);
-        ID = id;
-        product = p;
-        lotSize = l;
-        requiredMaterial = rMaterial; 
-        OneShareArray = OneShare; 
->>>>>>> 4abdaba0a135cf48110cef8b4596fd84e40610f1
         countLots = 0;
     }
     public void run(){
@@ -62,6 +44,36 @@ class Factory extends Thread{
             System.out.printf(" >> -------- Complete Lot %d \n",countLots);
         }
         else System.out.printf(" >> -------- Fail \n");
+        /*
+        int temp1,temp2,temp3,facGet; 
+        //temp1 keep lotSize*required Material;
+        //temp2 keep add Material to cMaterial when lots fail then collect material;
+        //temp3 keep new required Material 
+
+        for(int i=0; i<rMaterial.size();i++){ 
+            temp1 = lotSize*rMaterial.get(i);
+            facGet = oneArray.get(i).getMaterial(temp1);
+            if(cMaterial.size()<=rMaterial.size()){
+                cMartial.add(facGet);
+            }
+            else{
+                temp2 = cMaterial.get(i);
+                temp2 = temp2+facGet;
+                cMarterial.set(i,temp2);
+            }//end-if
+
+            if(temp1==cMaterial.get(i)){
+                countLots++;
+                cMaterial.set(i,0);
+            }
+            else{
+                fail++;
+                temp3 = rMaterial.get(i) - cMaterial.get(i);
+                rMaterial.set(i,temp3);
+            }//end-if
+            //print complete or fail;
+        }//end-for loop
+        */
      }//end-run
 
 }//end Factory
@@ -209,7 +221,7 @@ class FactorySimulation {
                     upl.get(f));
             for (int m = 0; m < facRequired.get(f).size(); m++) { // Each material Required; facRequired.get(i).size() =
                                                                   // number of materials type
-                System.out.printf("%3d %s", facRequired.get(f).get(m), matName.get(m)); // facRequired.get(i).get(m) =
+                System.out.printf("%3d %s", getfacRequired.get(f).get(m), matName.get(m)); // facRequired.get(i).get(m) =
                                                                                         // amount of required materials
                 if (m == facRequired.get(f).size() - 1) {
                     System.out.printf("\n");

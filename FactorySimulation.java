@@ -11,7 +11,7 @@ class Factory implements Runnable {
     // private String product;
     private ArrayList<Integer> requireMat, inStockMat = new ArrayList<Integer>();
     private ArrayList<OneShareMaterial> sharedMaterial;
-    MyUtility program = new MyUtility();
+    private MyUtility program = new MyUtility();
 
     public Factory() {
     }
@@ -40,11 +40,7 @@ class Factory implements Runnable {
             }
             // program.printThreadName(); System.out.printf(" >> inStockMat [%d] =
             // %d\n",i,inStockMat.get(i));
-
-            program.printThreadName();
-            System.out.printf(" >> Get %,5d %10s", facGet, sharedMaterial.get(m).getNameMaterial());
-            System.out.printf("  Balance = %,5d %10s\n", sharedMaterial.get(m).getBalance(), sharedMaterial.get(m).getNameMaterial());
-            
+            printGet(facGet, m);
         }
         program.printThreadName();
         if (fail == 0) {
@@ -53,6 +49,12 @@ class Factory implements Runnable {
         } else
             System.out.printf(" >> -------- Fail \n");
     }// end-run
+
+    public void printGet(int facGet, int m){
+        program.printThreadName();
+        System.out.printf(" >> Get %,5d %10s", facGet, sharedMaterial.get(m).getNameMaterial());
+        System.out.printf("  Balance = %,5d %10s\n", sharedMaterial.get(m).getBalance(), sharedMaterial.get(m).getNameMaterial());
+    }
 
     public int getNumberOfLot() {
         return countLots;
@@ -102,7 +104,7 @@ for(int i=0; i<rMaterial.size();i++){
 class OneShareMaterial {
     private String name;
     private int balance, supplierPut;
-    MyUtility program = new MyUtility();
+    private MyUtility program = new MyUtility();
 
     public OneShareMaterial() {
     }
@@ -261,7 +263,7 @@ class FactorySimulation {
         
         //---------------------------  Print Day & Put material --------------------------
         for (int d = 0; d < days; d++) {
-            ArrayList<Factory> factory = new ArrayList<Factory>();
+            ArrayList<Factory> factory = new ArrayList<Factory>(); //Runnable Object
             System.out.println();
             program.printThreadName();
             System.out.printf(" >> Day %d\n", d + 1);

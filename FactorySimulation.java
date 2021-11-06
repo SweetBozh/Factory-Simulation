@@ -5,6 +5,37 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+<<<<<<< HEAD
+class Factory implements Runnable{
+    private int ID,lotSize,countLots,fail=0; 
+    //private String product;
+    private ArrayList<Integer> requiredMat,inStockMat = new ArrayList<Integer>();
+    private ArrayList<OneShareMaterial> osList;
+    MyUtility program = new MyUtility();
+
+    public Factory(){}
+    public Factory(int id,int l,ArrayList<Integer> rMat,ArrayList<OneShareMaterial> onl){
+        ID = id; //product = p;
+        lotSize = l;
+        requiredMat = rMat; 
+        osList = onl; 
+        countLots = 0;
+    }
+    public void run(){
+        int facGet,temp1;
+        for(int i=0 ;i<requiredMat.size();i++){
+            temp1 = lotSize*requiredMat.get(i);
+            facGet = osList.get(i).getMaterial(temp1);
+            inStockMat.add(0);
+            if(inStockMat.get(i)+facGet<temp1){
+                fail++;
+                inStockMat.set(i,+facGet);
+            }
+            else{
+                inStockMat.set(i,0);
+            }
+            //program.printThreadName(); System.out.printf(" >> inStockMat [%d] = %d\n",i,inStockMat.get(i));
+=======
 
 class Factory implements Runnable {
     private int ID, lotSize, countLots, fail = 0;
@@ -40,7 +71,11 @@ class Factory implements Runnable {
             }
             // program.printThreadName(); System.out.printf(" >> inStockMat [%d] =
             // %d\n",i,inStockMat.get(i));
+<<<<<<< HEAD
+>>>>>>> ba1d5e738580d42a21a282c2a92b6ae6c6f49182
+=======
 
+>>>>>>> 7866373fd8000312b2250b1ecd7b3e2480d04b77
             program.printThreadName();
             System.out.printf(" >> Get %,5d %10s", facGet, sharedMaterial.get(m).getNameMaterial());
             System.out.printf("  Balance = %,5d %10s\n", sharedMaterial.get(m).getBalance(), sharedMaterial.get(m).getNameMaterial());
@@ -49,6 +84,44 @@ class Factory implements Runnable {
         program.printThreadName();
         if (fail == 0) {
             ++countLots;
+<<<<<<< HEAD
+            System.out.printf(" >> -------- Complete Lot %d \n",countLots);
+        }
+        else System.out.printf(" >> -------- Fail \n");
+        /*
+        int temp1,temp2,temp3,facGet; 
+        //temp1 keep lotSize*required Material;
+        //temp2 keep add Material to inStockMat when lots fail then collect material;
+        //temp3 keep new required Material 
+
+        for(int i=0; i<requiredMat.size();i++){ 
+            temp1 = lotSize*requiredMat.get(i);
+            facGet = osList.get(i).getMaterial(temp1);
+            if(inStockMat.size()<=requiredMat.size()){
+                inStockMat.add(facGet);
+            }
+            else{
+                temp2 = inStockMat.get(i);
+                temp2 = temp2+facGet;
+                inStockMat.set(i,temp2);
+            }//end-if
+
+            if(temp1==inStockMat.get(i)){
+                countLots++;
+                inStockMat.set(i,0);
+            }
+            else{
+                fail++;
+                temp3 = requiredMat.get(i) - inStockMat.get(i);
+                requiredMat.set(i,temp3);
+            }//end-if
+            //print complete or fail;
+        }//end-for loop
+        */
+     }//end-run
+
+}//end Factory
+=======
             System.out.printf(" >> -------- Complete Lot %d \n", countLots);
         } else
             System.out.printf(" >> -------- Fail \n");
@@ -99,6 +172,7 @@ for(int i=0; i<rMaterial.size();i++){
 }//end-for loop
 }//end-run*/
 
+>>>>>>> ba1d5e738580d42a21a282c2a92b6ae6c6f49182
 class OneShareMaterial {
     private String name;
     private int balance, supplierPut;

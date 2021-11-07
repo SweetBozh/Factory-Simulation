@@ -67,7 +67,7 @@ class Factory implements Runnable {
             countLots++;
             System.out.printf("Thread %-9s >> -------- Complete Lot %d \n",Thread.currentThread().getName(),countLots);
         }
-    }//end run
+    }//end run //check push 8/11/2021 
 
     public void printGet(int facGet, int m){
         program.printThreadName();

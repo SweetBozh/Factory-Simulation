@@ -132,7 +132,7 @@ class OneShareMaterial {
         System.out.printf("Thread %-9s >> Get %,5d %10s Balance = %,5d %10s\n",Thread.currentThread().getName(),numGet,name,balance,name);
         //System.out.printf("  Balance = %,5d %10s\n",balance,name);
         return numGet;
-    }
+    }//check push 8/11/2021 
 
     public void printListMaterial() {
         // check all list Materials

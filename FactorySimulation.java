@@ -41,6 +41,10 @@ class Factory implements Runnable {
             // program.printThreadName(); System.out.printf(" >> inStockMat [%d] =
             // %d\n",i,inStockMat.get(i));
             printGet(facGet, m);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+            }
         }
         program.printThreadName();
         if (fail == 0) {
@@ -276,7 +280,6 @@ class FactorySimulation {
             }
             System.out.println();
 
-            
             //--------------------------- Run Thread (Still in day loop) -----------------------
             // Get Material (Thread work)
             ArrayList<Thread> threadToday = new ArrayList<Thread>(); //Keep All factory thread today
@@ -287,6 +290,7 @@ class FactorySimulation {
                 threadToday.add(facThread);
                 facThread.start();
             }
+
             for (int f = 0; f < factID; f++) {
                 try {
                     threadToday.get(f).join();

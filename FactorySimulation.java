@@ -37,7 +37,7 @@ class Factory implements Runnable {
                 temp1 = lotSize*requireMat.get(i) - inStockMat.get(i); 
             }
             
-            if(inStockMat.get(i)!=temp1){
+            if(inStockMat.get(i)<temp1){
                   facGet = sharedMaterial.get(i).getMaterial(temp1);
                   if(inStockMat.size()==requireMat.size()){
                       temp2 = inStockMat.get(i);
@@ -55,7 +55,7 @@ class Factory implements Runnable {
         
         //program.printThreadName();
         if(fail!=0){
-            System.out.printf("Thread %10s >> -------- Fail \n",Thread.currentThread().getName());
+            System.out.printf("Thread %-9s >> -------- Fail \n",Thread.currentThread().getName());
         }
         else{
             int temp1,temp2;
@@ -65,7 +65,7 @@ class Factory implements Runnable {
               inStockMat.set(i,temp2);
             }
             countLots++;
-            System.out.printf("Thread %10s >> -------- Complete Lot %d \n",Thread.currentThread().getName(),countLots);
+            System.out.printf("Thread %-9s >> -------- Complete Lot %d \n",Thread.currentThread().getName(),countLots);
         }
     }//end run
 
@@ -129,7 +129,7 @@ class OneShareMaterial {
                 balance = 0;
         }
         //program.printThreadName();
-        System.out.printf("Thread %10s >> Get %,5d %10s Balance = %,5d %10s\n",Thread.currentThread().getName(),numGet,name,balance,name);
+        System.out.printf("Thread %-9s >> Get %,5d %10s Balance = %,5d %10s\n",Thread.currentThread().getName(),numGet,name,balance,name);
         //System.out.printf("  Balance = %,5d %10s\n",balance,name);
         return numGet;
     }

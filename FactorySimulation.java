@@ -263,7 +263,6 @@ class FactorySimulation {
             }
             System.out.println();
 
-            
             //--------------------------- Run Thread (Still in day loop) -----------------------
             // Get Material (Thread work)
             for (int f = 0; f < factID; f++) {

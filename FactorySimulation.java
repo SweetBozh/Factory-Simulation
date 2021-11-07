@@ -238,7 +238,7 @@ class FactorySimulation {
             System.out.printf(" >> %-8s factory  |   %-3d units per lot  |  materials per lot = ", prodName.get(f),
                     upl.get(f));
             for (int m = 0; m < facRequired.get(f).size(); m++) { // Each material Required, facRequired.get(i).size() = number of materials type
-                System.out.printf("%3d %s", facRequired.get(f).get(m), matName.get(m)); // facRequired.get(i).get(m) = amount of required materials
+                System.out.printf("%3d %s", upl.get(f),facRequired.get(f).get(m), matName.get(m)); // facRequired.get(i).get(m) = amount of required materials
                 if (m == facRequired.get(f).size() - 1) {
                     System.out.printf("\n");
                 } // If m = last material -> new line

@@ -79,6 +79,10 @@ class Factory implements Runnable {
         return inStockMat;
     }
 
+    public int getID(){
+        return ID;
+    }
+
 }// end Factory
 
 

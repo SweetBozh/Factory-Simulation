@@ -310,11 +310,12 @@ class FactorySimulation {
         }
         scanInput.close();
 
+        System.out.println();
         program.printThreadName();
         System.out.printf(" >> Summary \n");
         for (int i = 0; i < factID; i++) {
             program.printThreadName();
-            System.out.printf(" Total %-8s Lots = %d\n", prodName.get(i), numberOfLot.get(i));
+            System.out.printf(" >> Total %-8s Lots = %d\n", prodName.get(i), numberOfLot.get(i));
         }
         scanInput.close();
     }// end main

@@ -244,7 +244,7 @@ class FactorySimulation {
             System.out.printf(" >> %-8s factory  |   %-3d units per lot  |  materials per lot = ", prodName.get(f),
                     upl.get(f));
             for (int m = 0; m < facRequired.get(f).size(); m++) { // Each material Required, facRequired.get(i).size() = number of materials type
-                System.out.printf("%3d %s",upl.get(f)* facRequired.get(f).get(m), matName.get(m)); // facRequired.get(i).get(m) = amount of required materials
+                System.out.printf("%3d %s", upl.get(f),facRequired.get(f).get(m), matName.get(m)); // facRequired.get(i).get(m) = amount of required materials
                 if (m == facRequired.get(f).size() - 1) {
                     System.out.printf("\n");
                 } // If m = last material -> new line
@@ -289,14 +289,32 @@ class FactorySimulation {
                 facMatLeft.set(f, factory.get(f).getMaterialLeft()); // Create method in Factory
                 numberOfLot.set(f, factory.get(f).getNumberOfLot());
             }
-        }//end day
-    
-        //-------------------------------- Print Summary ---------------------------------
+
+            // Old code
+            // for (int f = 0; f < factID; f++) {
+            // *Edit Constructor (Add more parameter) before run next line
+            // *factory.add(new Factory(f, prodName.get(f), upl.get(f), facRequired.get(f),
+            // material), numberOfLot.get(f));
+            // factory.get(f).start();
+            // *Run Factory Thread, inside run(), update variable int numberOfLot in thread
+            // try {
+            // factory.get(f).join();
+            // } catch (InterruptedException e) {
+            // System.out.println(e);
+            // }
+
+            // *facMatLeft.set(f, factory.get(f).getMaterialLeft());
+            // *numberOfLot.set(f, factory.get(f).getNumberOfLot());
+            // Keep variable Lot of each factory before thread die.
+            // }
+        }
+        scanInput.close();
+
         program.printThreadName();
         System.out.printf(" >> Summary \n");
         for (int i = 0; i < factID; i++) {
             program.printThreadName();
-            System.out.printf(" >> Total %-8s Lots = %d\n", prodName.get(i), numberOfLot.get(i));
+            System.out.printf(" Total %-8s Lots = %d\n", prodName.get(i), numberOfLot.get(i));
         }
         scanInput.close();
     }// end main

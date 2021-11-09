@@ -36,7 +36,6 @@ class Factory implements Runnable {
               else{ //when have some material in Stock
                   facRequireToday = lotSize*requireMat.get(i) - inStockMat.get(i); 
               }
-              //System.out.printf("%-9s >> [%d] facRequireToday = %d\n",Thread.currentThread().getName(),i,facRequireToday);
               if(inStockMat.get(i)<=facRequire && facRequireToday!=0 ){
                    
                     facGet = sharedMaterial.get(i).getMaterial(facRequireToday);
@@ -51,12 +50,10 @@ class Factory implements Runnable {
                     if(inStockMat.get(i)< facRequire ){
                         fail++;
                     }
-              //System.out.printf("%-9s >> facGet = %d [%d] in Stock = %d\n",Thread.currentThread().getName(),facGet,i,inStockMat.get(i));
               }//end if
          
          }//end for
-          
-          //program.printThreadName();
+        
           if(fail!=0){
               System.out.printf("Thread %-9s >> -------- Fail\n",Thread.currentThread().getName());
           }
@@ -136,9 +133,7 @@ class OneShareMaterial {
             else
                 balance = 0;
         }
-        //program.printThreadName();
         System.out.printf("Thread %-9s >> Get %,5d %10s \tBalance = %,5d %10s\n",Thread.currentThread().getName(),numGet,name,balance,name);
-        //System.out.printf("  Balance = %,5d %10s\n",balance,name);
         return numGet;
     }
 
@@ -197,8 +192,7 @@ class FactorySimulation{
                         prodName.add(buf[1].trim());
                         upl.add(Integer.parseInt(buf[2].trim()));
                         for (int i = 3; i < matName.size() + 3; i++) {
-                            // Add Amount of each type of materials requirement and keep in Array
-                            // matRequired
+                            // Add Amount of each type of materials requirement and keep in Array matRequired
                             matRequired.add(Integer.parseInt(buf[i].trim()));
                             matLeft.add(0); // Set initial value;
                         }
